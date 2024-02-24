@@ -32,7 +32,7 @@ jobs:
 
     - name: Decode Keystore File
       run: |
-        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > ./ApkDownload/release.keystore
 
 
     - name: Build and Sign APK
