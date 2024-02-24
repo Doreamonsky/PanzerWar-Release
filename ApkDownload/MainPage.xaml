@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:strings="clr-namespace:ApkDownload.Resources.Localization"
+             x:Class="ApkDownload.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label Text="{x:Static strings:AppRes.DownloaderTitle}"></Label>
+            <Button
+                x:Name="DownloadBtn"
+                Text="{x:Static strings:AppRes.DownloadGame}"
+                Clicked="OnDownloadFileClicked"
+                HorizontalOptions="Fill" />
+
+            <Label x:Name="DownloadInfo" IsVisible="False"></Label>
+            <ProgressBar x:Name="DownloadProgress" IsVisible="False" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
