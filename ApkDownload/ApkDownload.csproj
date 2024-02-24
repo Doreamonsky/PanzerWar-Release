@@ -1,9 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <PublishAot>true</PublishAot>
-    </PropertyGroup>
-  
     <PropertyGroup>
         <TargetFrameworks>net8.0-android;</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this:

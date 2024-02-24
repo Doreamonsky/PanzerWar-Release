@@ -43,7 +43,9 @@ public partial class MainPage : ContentPage
 
     private async void OnDownloadGameClicked(object sender, EventArgs e)
     {
+        DownloadGameBtn.IsEnabled = false;
         await Navigation.PushAsync(new DownloadGamePage());
+        DownloadGameBtn.IsEnabled = true;
     }
 
     private void OnPlayFreeVerClicked(object sender, EventArgs e)
