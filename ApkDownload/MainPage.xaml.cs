@@ -8,12 +8,13 @@ public partial class MainPage : ContentPage
 {
     private bool _isDownloading = false;
     private readonly FileDownloader _downloader;
-    private ApkFileDetails _apkFileDetail;
+    private readonly Dictionary<int, ApkFileDetails> _apkFileDetailMap;
 
     public MainPage()
     {
         InitializeComponent();
         _downloader = new FileDownloader();
+        _apkFileDetailMap = new Dictionary<int, ApkFileDetails>();
 
         downloadTypePicker.Items.Clear();
         downloadTypePicker.Items.Add(AppRes.FreeVer);
@@ -53,9 +54,11 @@ public partial class MainPage : ContentPage
         SetDownloadState(true);
 
         var apkFile = $"{FileSystem.CacheDirectory}/{GetLocalFileCacheName()}";
-        if (_apkFileDetail == null)
+        var index = downloadTypePicker.SelectedIndex;
+        if (!_apkFileDetailMap.TryGetValue(index, out var _apkFileDetail))
         {
             _apkFileDetail = await _downloader.FetchFileListAsync(GetDownloadLink());
+            _apkFileDetailMap[index] = _apkFileDetail;
         }
 
         var isUserAgree =
