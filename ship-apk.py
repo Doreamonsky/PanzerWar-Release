@@ -60,8 +60,9 @@ def split_all_apks_in_directory(directory_path, chunk_size=52428800, base_url="h
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Split APK files into smaller chunks')
     parser.add_argument('-d', '--directory', type=str, required=True, help='Directory containing APK files to split')
+    parser.add_argument('-u', '--url', type=str, required=True, help='The remote url for downloading')
     args = parser.parse_args()
 
     directory_path = args.directory  # Use the directory path from the command line argument
-    base_url = "https://dl.windyverse.net/apk/"
+    base_url = args.url
     split_all_apks_in_directory(directory_path, 50 * 1024 * 1024, base_url)
