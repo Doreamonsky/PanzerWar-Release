@@ -3,30 +3,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:strings="clr-namespace:ApkDownload.Resources.Localization"
-             x:Class="ApkDownload.MainPage">
+             x:Class="ApkDownload.DownloadGamePage">
 
     <ScrollView>
         <VerticalStackLayout
             Padding="30,30"
             Spacing="25">
+            <Picker x:Name="downloadTypePicker" Title="{x:Static strings:AppRes.DownloadType}">
+            </Picker>
+
             <Button
-                x:Name="DownloadGameBtn"
+                x:Name="DownloadBtn"
                 Text="{x:Static strings:AppRes.DownloadGame}"
-                Clicked="OnDownloadGameClicked"
+                Clicked="OnDownloadFileClicked"
                 HorizontalOptions="Fill" />
 
             <Button
-                x:Name="PlayFreeVerBtn"
-                Text="{x:Static strings:AppRes.FreeVer}"
-                Clicked="OnPlayFreeVerClicked"
+                x:Name="CleanCacheBtn"
+                Text="{x:Static strings:AppRes.CleanCache}"
+                Clicked="OnCleanCacheClicked"
                 HorizontalOptions="Fill" />
 
-            <Button
-                x:Name="PlayDEVerBtn"
-                Text="{x:Static strings:AppRes.DEVer}"
-                Clicked="OnPlayPaidVerClicked"
-                HorizontalOptions="Fill" />
+            <Label x:Name="DownloadInfo" IsVisible="False"></Label>
+            <ProgressBar x:Name="DownloadProgress" IsVisible="False" />
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

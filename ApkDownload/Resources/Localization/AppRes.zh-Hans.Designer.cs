@@ -87,6 +87,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 研发周报.
+        /// </summary>
+        internal static string DailyReport {
+            get {
+                return ResourceManager.GetString("DailyReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 装甲纷争:决定版.
         /// </summary>
         internal static string DEVer {
@@ -114,7 +123,7 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 装甲纷争下载器.
+        ///   Looks up a localized string similar to 装甲纷争启动器.
         /// </summary>
         internal static string DownloaderTitle {
             get {
@@ -159,6 +168,24 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 程序异常.
+        /// </summary>
+        internal static string Exception {
+            get {
+                return ResourceManager.GetString("Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 截图反馈给开发者。异常 {0} 位于 {1}.
+        /// </summary>
+        internal static string ExceptionContent {
+            get {
+                return ResourceManager.GetString("ExceptionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 文件已被损坏，无法安装，请重新下载.
         /// </summary>
         internal static string FileDamaged {
@@ -173,6 +200,15 @@ namespace ApkDownload.Resources.Localization {
         internal static string FreeVer {
             get {
                 return ResourceManager.GetString("FreeVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 启动 {0} {1}.
+        /// </summary>
+        internal static string Launch {
+            get {
+                return ResourceManager.GetString("Launch", resourceCulture);
             }
         }
         

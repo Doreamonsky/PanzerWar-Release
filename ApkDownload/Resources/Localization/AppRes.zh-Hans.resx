@@ -28,7 +28,7 @@
         <value>下载完毕，点击安装</value>
     </data>
     <data name="DownloaderTitle" xml:space="preserve">
-        <value>装甲纷争下载器</value>
+        <value>装甲纷争启动器</value>
     </data>
     <data name="No" xml:space="preserve">
         <value>否</value>
@@ -68,5 +68,17 @@
     </data>
     <data name="Validate" xml:space="preserve">
         <value>校验文件中 ...</value>
+    </data>
+    <data name="Launch" xml:space="preserve">
+        <value>启动 {0} {1}</value>
+    </data>
+    <data name="DailyReport" xml:space="preserve">
+        <value>研发周报</value>
+    </data>
+    <data name="Exception" xml:space="preserve">
+        <value>程序异常</value>
+    </data>
+    <data name="ExceptionContent" xml:space="preserve">
+        <value>截图反馈给开发者。异常 {0} 位于 {1}</value>
     </data>
 </root>

@@ -87,6 +87,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dev Report.
+        /// </summary>
+        internal static string DailyReport {
+            get {
+                return ResourceManager.GetString("DailyReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Panzer War : DE.
         /// </summary>
         internal static string DEVer {
@@ -114,7 +123,7 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Panzer War Downloader.
+        ///   Looks up a localized string similar to Panzer War Launcher.
         /// </summary>
         internal static string DownloaderTitle {
             get {
@@ -159,6 +168,24 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exception.
+        /// </summary>
+        internal static string Exception {
+            get {
+                return ResourceManager.GetString("Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report to dev. Exception {0} at {1}.
+        /// </summary>
+        internal static string ExceptionContent {
+            get {
+                return ResourceManager.GetString("ExceptionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The download is failed..
         /// </summary>
         internal static string FileDamaged {
@@ -173,6 +200,15 @@ namespace ApkDownload.Resources.Localization {
         internal static string FreeVer {
             get {
                 return ResourceManager.GetString("FreeVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch {0} {1}.
+        /// </summary>
+        internal static string Launch {
+            get {
+                return ResourceManager.GetString("Launch", resourceCulture);
             }
         }
         

@@ -5,12 +5,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ApkDownload"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:strings="clr-namespace:ApkDownload.Resources.Localization"
+    Shell.FlyoutBehavior="Flyout"
     Title="ApkDownload">
 
     <ShellContent
-        Title="Panzer War"
+        Title="{x:Static strings:AppRes.DownloaderTitle}"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <FlyoutItem Title="{x:Static strings:AppRes.DownloadGame}">
+        <ShellContent
+            Title="{x:Static strings:AppRes.DownloadGame}"
+            ContentTemplate="{DataTemplate local:DownloadGamePage}"
+            Route="DownloadGame" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{x:Static strings:AppRes.DailyReport}">
+        <ShellContent
+            Title="{x:Static strings:AppRes.DailyReport}"
+            ContentTemplate="{DataTemplate local:DailyReportPage}"
+            Route="DailyReport" />
+    </FlyoutItem>
+
 
 </Shell>

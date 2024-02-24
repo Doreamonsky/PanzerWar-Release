@@ -28,7 +28,7 @@
         <value>Download Completed. Click to install.</value>
     </data>
     <data name="DownloaderTitle" xml:space="preserve">
-        <value>Panzer War Downloader</value>
+        <value>Panzer War Launcher</value>
     </data>
     <data name="Yes" xml:space="preserve">
         <value>Yes</value>
@@ -68,5 +68,17 @@
     </data>
     <data name="Validate" xml:space="preserve">
         <value>Validating files ...</value>
+    </data>
+    <data name="Launch" xml:space="preserve">
+        <value>Launch {0} {1}</value>
+    </data>
+    <data name="DailyReport" xml:space="preserve">
+        <value>Dev Report</value>
+    </data>
+    <data name="Exception" xml:space="preserve">
+        <value>Exception</value>
+    </data>
+    <data name="ExceptionContent" xml:space="preserve">
+        <value>Report to dev. Exception {0} at {1}</value>
     </data>
 </root>

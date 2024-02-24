@@ -13,6 +13,7 @@ public class MainApplication : MauiApplication
     {
         DependencyService.Register<AndroidToast>();
         DependencyService.Register<AndroidApkInstaller>();
+        DependencyService.Register<AndroidAppInfoService>();
     }
 
     protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
