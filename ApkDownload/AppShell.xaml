@@ -28,5 +28,11 @@
             Route="DailyReport" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Discord">
+        <ShellContent
+            Title="Discord"
+            ContentTemplate="{DataTemplate local:DiscordPage}"
+            Route="Discord" />
+    </FlyoutItem>
 
 </Shell>

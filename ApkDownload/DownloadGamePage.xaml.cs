@@ -6,22 +6,20 @@ namespace ApkDownload;
 
 public partial class DownloadGamePage : ContentPage
 {
-    private bool _isDownloading = false;
-    private readonly FileDownloader _downloader;
-    private readonly Dictionary<int, ApkFileDetails> _apkFileDetailMap;
+    private static bool _isDownloading = false;
+    private static readonly FileDownloader _downloader = new FileDownloader();
+    private static readonly Dictionary<int, ApkFileDetails> _apkFileDetailMap = new Dictionary<int, ApkFileDetails>();
 
     public DownloadGamePage()
     {
         InitializeComponent();
-
-        _downloader = new FileDownloader();
-        _apkFileDetailMap = new Dictionary<int, ApkFileDetails>();
 
         downloadTypePicker.Items.Clear();
         downloadTypePicker.Items.Add(AppRes.FreeVer);
         downloadTypePicker.Items.Add(AppRes.DEVer);
         downloadTypePicker.SelectedIndex = 0;
     }
+
 
     private string GetDownloadLink()
     {
