@@ -18,6 +18,7 @@ public partial class MainPage : ContentPage
         downloadTypePicker.Items.Clear();
         downloadTypePicker.Items.Add(AppRes.FreeVer);
         downloadTypePicker.Items.Add(AppRes.DEVer);
+        downloadTypePicker.SelectedIndex = 0;
     }
 
     private string GetDownloadLink()
@@ -49,7 +50,7 @@ public partial class MainPage : ContentPage
             return;
         }
 
-        _isDownloading = true;
+        SetDownloadState(true);
 
         var apkFile = $"{FileSystem.CacheDirectory}/{GetLocalFileCacheName()}";
         if (_apkFileDetail == null)
@@ -67,7 +68,13 @@ public partial class MainPage : ContentPage
             await RunDownloadAndInstall(_apkFileDetail, apkFile);
         }
 
-        _isDownloading = false;
+        SetDownloadState(false);
+    }
+
+    private void SetDownloadState(bool isState)
+    {
+        _isDownloading = isState;
+        CleanCacheBtn.IsVisible = !isState;
     }
 
     private async Task RunDownloadAndInstall(ApkFileDetails apkFileDetail, string apkFile)
@@ -85,8 +92,8 @@ public partial class MainPage : ContentPage
                 {
                     var bytesDownloaded = $"{report.BytesDownloaded / 1024 / 1024:0.00} MB";
                     var totalBytes = $"{report.TotalBytes / 1024 / 1024:0.00} MB";
-                    var percent = Math.Round(report.ProgressPercentage * 100);
                     DownloadProgress.Progress = report.ProgressPercentage;
+                    var percent = (int)Math.Round(report.ProgressPercentage * 100);
                     DownloadInfo.Text = $"{bytesDownloaded} | {totalBytes} | {percent}%";
                 });
             }));
@@ -94,6 +101,7 @@ public partial class MainPage : ContentPage
         if (!isDownloaded)
         {
             await DisplayAlert(AppRes.Error, AppRes.FileDamaged, AppRes.Yes);
+            DownloadBtn.Text = AppRes.DownloadGame;
             return;
         }
 
@@ -103,6 +111,19 @@ public partial class MainPage : ContentPage
         if (installer != null)
         {
             installer.InstallApk(apkFile);
+        }
+    }
+
+    private async void OnCleanCacheClicked(object sender, EventArgs e)
+    {
+        var isCleanCache =
+            await DisplayAlert(AppRes.Confrim, AppRes.CleanCacheConfirm,
+                AppRes.Yes,
+                AppRes.No);
+
+        if (isCleanCache)
+        {
+            _downloader.CleanCacheFiles();
         }
     }
 }

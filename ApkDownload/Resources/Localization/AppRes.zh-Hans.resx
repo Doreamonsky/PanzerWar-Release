@@ -25,7 +25,7 @@
         <value>下载中 ...</value>
     </data>
     <data name="Downloaded" xml:space="preserve">
-        <value>下载完毕</value>
+        <value>下载完毕，点击安装</value>
     </data>
     <data name="DownloaderTitle" xml:space="preserve">
         <value>装甲纷争下载器</value>
@@ -53,5 +53,14 @@
     </data>
     <data name="DEVer" xml:space="preserve">
         <value>装甲纷争:决定版</value>
+    </data>
+    <data name="CleanCacheConfirm" xml:space="preserve">
+        <value>确定清空缓存？会删除已下载的安装包。</value>
+    </data>
+    <data name="CleanCache" xml:space="preserve">
+        <value>清空缓存</value>
+    </data>
+    <data name="Confrim" xml:space="preserve">
+        <value>请确认</value>
     </data>
 </root>

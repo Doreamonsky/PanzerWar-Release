@@ -25,7 +25,7 @@
         <value>Downloading ...</value>
     </data>
     <data name="Downloaded" xml:space="preserve">
-        <value>Downloaded</value>
+        <value>Download Completed. Click to install.</value>
     </data>
     <data name="DownloaderTitle" xml:space="preserve">
         <value>Panzer War Downloader</value>
@@ -53,5 +53,14 @@
     </data>
     <data name="DEVer" xml:space="preserve">
         <value>Panzer War : DE</value>
+    </data>
+    <data name="CleanCache" xml:space="preserve">
+        <value>Clean cache</value>
+    </data>
+    <data name="CleanCacheConfirm" xml:space="preserve">
+        <value>Confirm to clean cache?</value>
+    </data>
+    <data name="Confrim" xml:space="preserve">
+        <value>Please confrim</value>
     </data>
 </root>

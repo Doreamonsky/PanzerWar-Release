@@ -4,7 +4,7 @@ using Application = Android.App.Application;
 
 namespace ApkDownload.Platforms.Android.Impl;
 
-public class ApkInstaller : IApkInstaller
+public class AndroidApkInstaller : IApkInstaller
 {
     public void InstallApk(string apkFilePath)
     {

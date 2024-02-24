@@ -126,5 +126,14 @@ namespace ApkDownload.Shared.Downloader
 
             return true;
         }
+
+        public void CleanCacheFiles()
+        {
+            var folder = new DirectoryInfo(FileSystem.CacheDirectory);
+            foreach (var file in folder.GetFiles())
+            {
+                file.Delete();
+            }
+        }
     }
 }

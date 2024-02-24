@@ -62,7 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Platforms\Android\Impl\ApkInstaller.cs">
+    <Compile Update="Platforms\Android\Impl\AndroidApkInstaller.cs">
       <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
     </Compile>
     <Compile Update="Resources\Localization\AppRes.Designer.cs">

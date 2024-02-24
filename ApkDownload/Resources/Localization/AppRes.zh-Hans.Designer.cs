@@ -60,6 +60,33 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 清空缓存.
+        /// </summary>
+        internal static string CleanCache {
+            get {
+                return ResourceManager.GetString("CleanCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 确定清空缓存？会删除已下载的安装包。.
+        /// </summary>
+        internal static string CleanCacheConfirm {
+            get {
+                return ResourceManager.GetString("CleanCacheConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 请确认.
+        /// </summary>
+        internal static string Confrim {
+            get {
+                return ResourceManager.GetString("Confrim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 装甲纷争:决定版.
         /// </summary>
         internal static string DEVer {
@@ -78,7 +105,7 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 下载完毕.
+        ///   Looks up a localized string similar to 下载完毕，点击安装.
         /// </summary>
         internal static string Downloaded {
             get {

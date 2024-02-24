@@ -60,7 +60,34 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Clean cache.
+        /// </summary>
+        internal static string CleanCache {
+            get {
+                return ResourceManager.GetString("CleanCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm to clean cache?.
+        /// </summary>
+        internal static string CleanCacheConfirm {
+            get {
+                return ResourceManager.GetString("CleanCacheConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confrim.
+        /// </summary>
+        internal static string Confrim {
+            get {
+                return ResourceManager.GetString("Confrim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Panzer War : DE.
         /// </summary>
         internal static string DEVer {
             get {
@@ -78,7 +105,7 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloaded.
+        ///   Looks up a localized string similar to Download Completed. Click to install..
         /// </summary>
         internal static string Downloaded {
             get {
@@ -141,7 +168,7 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free Version.
+        ///   Looks up a localized string similar to Panzer War (Free).
         /// </summary>
         internal static string FreeVer {
             get {
