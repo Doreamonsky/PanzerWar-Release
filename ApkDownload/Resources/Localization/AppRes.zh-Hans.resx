@@ -63,4 +63,10 @@
     <data name="Confrim" xml:space="preserve">
         <value>请确认</value>
     </data>
+    <data name="Merge" xml:space="preserve">
+        <value>合并文件中 ...</value>
+    </data>
+    <data name="Validate" xml:space="preserve">
+        <value>校验文件中 ...</value>
+    </data>
 </root>

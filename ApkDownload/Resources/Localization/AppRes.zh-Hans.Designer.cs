@@ -177,11 +177,29 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 合并文件中 ....
+        /// </summary>
+        internal static string Merge {
+            get {
+                return ResourceManager.GetString("Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 否.
         /// </summary>
         internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 校验文件中 ....
+        /// </summary>
+        internal static string Validate {
+            get {
+                return ResourceManager.GetString("Validate", resourceCulture);
             }
         }
         

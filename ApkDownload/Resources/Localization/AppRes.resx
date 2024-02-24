@@ -63,4 +63,10 @@
     <data name="Confrim" xml:space="preserve">
         <value>Please confrim</value>
     </data>
+    <data name="Merge" xml:space="preserve">
+        <value>Merging files ...</value>
+    </data>
+    <data name="Validate" xml:space="preserve">
+        <value>Validating files ...</value>
+    </data>
 </root>

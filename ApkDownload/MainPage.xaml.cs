@@ -75,18 +75,16 @@ public partial class MainPage : ContentPage
     {
         _isDownloading = isState;
         CleanCacheBtn.IsVisible = !isState;
+        DownloadProgress.IsVisible = isState;
+        DownloadInfo.IsVisible = isState;
     }
 
     private async Task RunDownloadAndInstall(ApkFileDetails apkFileDetail, string apkFile)
     {
-        DownloadBtn.Text = AppRes.Downloading;
-        DownloadProgress.IsVisible = true;
-        DownloadInfo.IsVisible = true;
-
         DependencyService.Get<IToast>().Show($"Local cache file: {apkFile}");
 
         var isDownloaded = await _downloader.DownloadAndMergeFilesAsync(apkFileDetail, apkFile,
-            (report =>
+            report =>
             {
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
@@ -96,7 +94,24 @@ public partial class MainPage : ContentPage
                     var percent = (int)Math.Round(report.ProgressPercentage * 100);
                     DownloadInfo.Text = $"{bytesDownloaded} | {totalBytes} | {percent}%";
                 });
-            }));
+            }, stage =>
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    switch (stage)
+                    {
+                        case FileDownloader.DownloadStage.Downloading:
+                            DownloadBtn.Text = AppRes.Downloading;
+                            break;
+                        case FileDownloader.DownloadStage.Merge:
+                            DownloadBtn.Text = AppRes.Merge;
+                            break;
+                        case FileDownloader.DownloadStage.Validate:
+                            DownloadBtn.Text = AppRes.Validate;
+                            break;
+                    }
+                });
+            });
 
         if (!isDownloaded)
         {

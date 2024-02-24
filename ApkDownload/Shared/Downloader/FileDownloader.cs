@@ -19,16 +19,26 @@ namespace ApkDownload.Shared.Downloader
             public double ProgressPercentage => (double)BytesDownloaded / TotalBytes;
         }
 
+        public enum DownloadStage
+        {
+            Downloading,
+            Merge,
+            Validate
+        }
+
         public delegate void ProgressChangedHandler(ProgressReport report);
 
+        public delegate void DownloadStageHandler(DownloadStage stage);
+
         public async Task<bool> DownloadAndMergeFilesAsync(ApkFileDetails apkFileDetails, string outputPath,
-            ProgressChangedHandler onProgressChanged)
+            ProgressChangedHandler onProgressChanged, DownloadStageHandler onStageChanged)
         {
             var parts = apkFileDetails.Parts;
             var outputFile = new FileInfo(outputPath);
             var downloadFile = true;
             if (outputFile.Exists)
             {
+                onStageChanged?.Invoke(DownloadStage.Validate);
                 var actualMD5 = await CalculateMD5Async(outputPath);
                 if (apkFileDetails.FileMd5 == actualMD5)
                 {
@@ -38,6 +48,8 @@ namespace ApkDownload.Shared.Downloader
 
             if (downloadFile)
             {
+                onStageChanged?.Invoke(DownloadStage.Downloading);
+
                 var totalSize = parts.Sum(file => file.Size);
                 var progressReport = new ProgressReport { TotalBytes = totalSize };
 
@@ -45,7 +57,7 @@ namespace ApkDownload.Shared.Downloader
                     .ToList();
 
                 var cacheFiles = await Task.WhenAll(downloadTasks);
-                return await MergeFilesAsync(cacheFiles, outputPath, apkFileDetails.FileMd5);
+                return await MergeFilesAsync(cacheFiles, outputPath, apkFileDetails.FileMd5, onStageChanged);
             }
 
             return true;
@@ -100,9 +112,13 @@ namespace ApkDownload.Shared.Downloader
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
-        private async Task<bool> MergeFilesAsync(string[] filePaths, string outputPath, string md5)
+        private async Task<bool> MergeFilesAsync(string[] filePaths, string outputPath, string md5,
+            DownloadStageHandler onStageChanged)
         {
+            // merge apks
+            onStageChanged?.Invoke(DownloadStage.Merge);
             await using var outputStream = File.Create(outputPath);
+
             foreach (var filePath in filePaths)
             {
                 await using var inputStream = File.OpenRead(filePath);
@@ -112,6 +128,9 @@ namespace ApkDownload.Shared.Downloader
 
             await outputStream.FlushAsync();
             outputStream.Close();
+
+            // validate md5
+            onStageChanged?.Invoke(DownloadStage.Validate);
             var actualMD5 = await CalculateMD5Async(outputPath);
             if (actualMD5 != md5)
             {
