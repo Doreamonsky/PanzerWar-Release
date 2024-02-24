@@ -45,4 +45,13 @@
     <data name="Error" xml:space="preserve">
         <value>Error</value>
     </data>
+    <data name="DownloadType" xml:space="preserve">
+        <value>Select game to download</value>
+    </data>
+    <data name="FreeVer" xml:space="preserve">
+        <value>Panzer War (Free)</value>
+    </data>
+    <data name="DEVer" xml:space="preserve">
+        <value>Panzer War : DE</value>
+    </data>
 </root>

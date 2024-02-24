@@ -60,6 +60,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 装甲纷争:决定版.
+        /// </summary>
+        internal static string DEVer {
+            get {
+                return ResourceManager.GetString("DEVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 确认下载 {0} 文件？.
         /// </summary>
         internal static string DownloadConfirm {
@@ -105,6 +114,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 请选择要下载的游戏.
+        /// </summary>
+        internal static string DownloadType {
+            get {
+                return ResourceManager.GetString("DownloadType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 错误.
         /// </summary>
         internal static string Error {
@@ -119,6 +137,15 @@ namespace ApkDownload.Resources.Localization {
         internal static string FileDamaged {
             get {
                 return ResourceManager.GetString("FileDamaged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 装甲纷争:普通版.
+        /// </summary>
+        internal static string FreeVer {
+            get {
+                return ResourceManager.GetString("FreeVer", resourceCulture);
             }
         }
         

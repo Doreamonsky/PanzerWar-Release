@@ -11,6 +11,9 @@
             Spacing="25">
 
             <Label Text="{x:Static strings:AppRes.DownloaderTitle}"></Label>
+            <Picker x:Name="downloadTypePicker" Title="{x:Static strings:AppRes.DownloadType}">
+            </Picker>
+
             <Button
                 x:Name="DownloadBtn"
                 Text="{x:Static strings:AppRes.DownloadGame}"

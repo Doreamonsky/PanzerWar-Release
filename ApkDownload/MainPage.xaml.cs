@@ -14,6 +14,32 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
         _downloader = new FileDownloader();
+
+        downloadTypePicker.Items.Clear();
+        downloadTypePicker.Items.Add(AppRes.FreeVer);
+        downloadTypePicker.Items.Add(AppRes.DEVer);
+    }
+
+    private string GetDownloadLink()
+    {
+        switch (downloadTypePicker.SelectedIndex)
+        {
+            case 1:
+                return "https://dl.windyverse.net/apk-de/apk_ship.json";
+            default:
+                return "https://dl.windyverse.net/apk/apk_ship.json";
+        }
+    }
+
+    private string GetLocalFileCacheName()
+    {
+        switch (downloadTypePicker.SelectedIndex)
+        {
+            case 1:
+                return "de-base.apk";
+            default:
+                return "base.apk";
+        }
     }
 
     private async void OnDownloadFileClicked(object sender, EventArgs e)
@@ -25,10 +51,10 @@ public partial class MainPage : ContentPage
 
         _isDownloading = true;
 
-        var apkFile = $"{FileSystem.CacheDirectory}/base.apk";
+        var apkFile = $"{FileSystem.CacheDirectory}/{GetLocalFileCacheName()}";
         if (_apkFileDetail == null)
         {
-            _apkFileDetail = await _downloader.FetchFileListAsync("https://dl.windyverse.net/apk/apk_ship.json");
+            _apkFileDetail = await _downloader.FetchFileListAsync(GetDownloadLink());
         }
 
         var isUserAgree =

@@ -45,4 +45,13 @@
     <data name="Error" xml:space="preserve">
         <value>错误</value>
     </data>
+    <data name="DownloadType" xml:space="preserve">
+        <value>请选择要下载的游戏</value>
+    </data>
+    <data name="FreeVer" xml:space="preserve">
+        <value>装甲纷争:普通版</value>
+    </data>
+    <data name="DEVer" xml:space="preserve">
+        <value>装甲纷争:决定版</value>
+    </data>
 </root>

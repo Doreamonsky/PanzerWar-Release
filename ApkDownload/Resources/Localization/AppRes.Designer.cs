@@ -60,6 +60,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string DEVer {
+            get {
+                return ResourceManager.GetString("DEVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm to download {0} file?.
         /// </summary>
         internal static string DownloadConfirm {
@@ -105,6 +114,15 @@ namespace ApkDownload.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select game to download.
+        /// </summary>
+        internal static string DownloadType {
+            get {
+                return ResourceManager.GetString("DownloadType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
@@ -119,6 +137,15 @@ namespace ApkDownload.Resources.Localization {
         internal static string FileDamaged {
             get {
                 return ResourceManager.GetString("FileDamaged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free Version.
+        /// </summary>
+        internal static string FreeVer {
+            get {
+                return ResourceManager.GetString("FreeVer", resourceCulture);
             }
         }
         
