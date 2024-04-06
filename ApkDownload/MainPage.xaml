@@ -26,6 +26,7 @@
                 Text="{x:Static strings:AppRes.DEVer}"
                 Clicked="OnPlayPaidVerClicked"
                 HorizontalOptions="Fill" />
+            <Label x:Name="VersionInfo"></Label>
         </VerticalStackLayout>
     </ScrollView>
 

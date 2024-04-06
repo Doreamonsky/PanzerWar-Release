@@ -39,6 +39,7 @@ public partial class MainPage : ContentPage
         }
 
         PlayDEVerBtn.IsVisible = paidVerInstalled;
+        VersionInfo.Text = $"v{AppInfo.VersionString}";
     }
 
     private async void OnDownloadGameClicked(object sender, EventArgs e)

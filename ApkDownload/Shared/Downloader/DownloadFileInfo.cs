@@ -20,4 +20,6 @@ public class DownloadFileInfo
     [JsonProperty("url")] public string Url { get; set; }
 
     [JsonProperty("size")] public long Size { get; set; }
+    
+    [JsonProperty("file_md5")] public string FileMd5 { get; set; }
 }

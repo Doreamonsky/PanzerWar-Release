@@ -90,8 +90,8 @@ public partial class DownloadGamePage : ContentPage
             {
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    var bytesDownloaded = $"{report.BytesDownloaded / 1024 / 1024:0.00} MB";
-                    var totalBytes = $"{report.TotalBytes / 1024 / 1024:0.00} MB";
+                    var bytesDownloaded = $"{(float)report.BytesDownloaded / 1024 / 1024f:0.00} MB";
+                    var totalBytes = $"{(float)report.TotalBytes / 1024 / 1024:0.00} MB";
                     DownloadProgress.Progress = report.ProgressPercentage;
                     var percent = (int)Math.Round(report.ProgressPercentage * 100);
                     DownloadInfo.Text = $"{bytesDownloaded} | {totalBytes} | {percent}%";

@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using ApkDownload.Shared.Interface;
 using Newtonsoft.Json;
 
 namespace ApkDownload.Shared.Downloader
@@ -67,41 +68,75 @@ namespace ApkDownload.Shared.Downloader
             ProgressChangedHandler onProgressChanged)
         {
             var localFilePath = Path.Combine(FileSystem.CacheDirectory, fileInfo.FileName);
+            var localFileInfo = new FileInfo(localFilePath);
+            long downloadedBytes = 0;
 
-            long existingLength = 0;
-            if (File.Exists(localFilePath))
+            try
             {
-                existingLength = new FileInfo(localFilePath).Length;
-                progressReport.BytesDownloaded += existingLength;
+                long existingLength = 0;
+                if (File.Exists(localFilePath))
+                {
+                    existingLength = new FileInfo(localFilePath).Length;
+                    downloadedBytes += existingLength;
+                    progressReport.BytesDownloaded += existingLength;
+                }
+
+                using var httpClient = new HttpClient();
+                using var request = new HttpRequestMessage(HttpMethod.Get, fileInfo.Url);
+                if (existingLength > 0)
+                {
+                    request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(existingLength, null);
+                }
+
+                using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                await using var inputStream = await response.Content.ReadAsStreamAsync();
+
+                await using var outputStream =
+                    existingLength > 0 ? File.OpenWrite(localFilePath) : File.Create(localFilePath);
+                if (existingLength > 0)
+                {
+                    outputStream.Seek(0, SeekOrigin.End); // 移动到文件末尾
+                }
+
+                var buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                {
+                    await outputStream.WriteAsync(buffer, 0, bytesRead);
+                    downloadedBytes += bytesRead;
+                    progressReport.BytesDownloaded += bytesRead;
+                    onProgressChanged?.Invoke(progressReport);
+                }
+
+                await outputStream.FlushAsync();
+                await outputStream.DisposeAsync();
+
+                var localMd5 = await CalculateMD5Async(localFilePath);
+                if (localMd5 == fileInfo.FileMd5)
+                {
+                    return localFilePath;
+                }
+
+                DependencyService.Get<IToast>()
+                    .Show(
+                        $"Md5 unmatch local: {localMd5.Substring(0, 5)} remote: {fileInfo.FileMd5.Substring(0, 5)} at file {fileInfo.FileName}");
+            }
+            catch (Exception e)
+            {
+                // Some error
+                DependencyService.Get<IToast>().Show($"Encounter exception: {e.Message} at {e.StackTrace}");
             }
 
-            using var httpClient = new HttpClient();
-            using var request = new HttpRequestMessage(HttpMethod.Get, fileInfo.Url);
-            if (existingLength > 0)
+            // Re-download part file ...
+            if (localFileInfo.Exists)
             {
-                request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(existingLength, null);
+                localFileInfo.Delete();
             }
 
-            using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            await using var inputStream = await response.Content.ReadAsStreamAsync();
+            progressReport.BytesDownloaded -= downloadedBytes;
 
-            await using var outputStream =
-                existingLength > 0 ? File.OpenWrite(localFilePath) : File.Create(localFilePath);
-            if (existingLength > 0)
-            {
-                outputStream.Seek(0, SeekOrigin.End); // 移动到文件末尾
-            }
-
-            var buffer = new byte[8192];
-            int bytesRead;
-            while ((bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
-            {
-                await outputStream.WriteAsync(buffer, 0, bytesRead);
-                progressReport.BytesDownloaded += bytesRead;
-                onProgressChanged?.Invoke(progressReport);
-            }
-
-            return localFilePath;
+            await Task.Delay(1000 * 5);
+            return await DownloadFileAsync(fileInfo, progressReport, onProgressChanged);
         }
 
         public async Task<string> CalculateMD5Async(string filePath)
