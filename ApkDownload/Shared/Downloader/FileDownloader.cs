@@ -6,6 +6,8 @@ namespace ApkDownload.Shared.Downloader
 {
     public class FileDownloader
     {
+        private readonly SemaphoreSlim semaphore = new SemaphoreSlim(3);
+
         public async Task<ApkFileDetails> FetchFileListAsync(string url)
         {
             using var httpClient = new HttpClient();
@@ -57,29 +59,7 @@ namespace ApkDownload.Shared.Downloader
                 var downloadTasks = parts.Select(file => DownloadFileAsync(file, progressReport, onProgressChanged))
                     .ToList();
 
-                var maxConcurrentTasks = 3;
-                var semaphore = new SemaphoreSlim(maxConcurrentTasks);
-
-                var tasksWithThrottle = new List<Task<string>>();
-
-                foreach (var task in downloadTasks)
-                {
-                    await semaphore.WaitAsync();
-
-                    tasksWithThrottle.Add(Task.Run(async () =>
-                    {
-                        try
-                        {
-                            return await task;
-                        }
-                        finally
-                        {
-                            semaphore.Release();
-                        }
-                    }));
-                }
-
-                var cacheFiles = await Task.WhenAll(tasksWithThrottle);
+                var cacheFiles = await Task.WhenAll(downloadTasks);
                 return await MergeFilesAsync(cacheFiles, outputPath, apkFileDetails.FileMd5, onStageChanged);
             }
 
@@ -89,6 +69,11 @@ namespace ApkDownload.Shared.Downloader
         private async Task<string> DownloadFileAsync(DownloadFileInfo fileInfo, ProgressReport progressReport,
             ProgressChangedHandler onProgressChanged)
         {
+            await semaphore.WaitAsync();
+
+            DependencyService.Get<IToast>()
+                .Show($"Start download chunk: {fileInfo.FileName}");
+
             var localFilePath = Path.Combine(FileSystem.CacheDirectory, fileInfo.FileName);
             var localFileInfo = new FileInfo(localFilePath);
             long downloadedBytes = 0;
@@ -138,6 +123,7 @@ namespace ApkDownload.Shared.Downloader
                 {
                     DependencyService.Get<IToast>()
                         .Show($"Chunk: {fileInfo.FileName} verified!");
+                    semaphore.Release();
                     return localFilePath;
                 }
 
@@ -158,6 +144,7 @@ namespace ApkDownload.Shared.Downloader
             }
 
             progressReport.BytesDownloaded -= downloadedBytes;
+            semaphore.Release();
 
             await Task.Delay(1000 * 5);
             return await DownloadFileAsync(fileInfo, progressReport, onProgressChanged);
