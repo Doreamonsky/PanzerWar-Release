@@ -57,7 +57,29 @@ namespace ApkDownload.Shared.Downloader
                 var downloadTasks = parts.Select(file => DownloadFileAsync(file, progressReport, onProgressChanged))
                     .ToList();
 
-                var cacheFiles = await Task.WhenAll(downloadTasks);
+                var maxConcurrentTasks = 3;
+                var semaphore = new SemaphoreSlim(maxConcurrentTasks);
+
+                var tasksWithThrottle = new List<Task<string>>();
+
+                foreach (var task in downloadTasks)
+                {
+                    await semaphore.WaitAsync();
+
+                    tasksWithThrottle.Add(Task.Run(async () =>
+                    {
+                        try
+                        {
+                            return await task;
+                        }
+                        finally
+                        {
+                            semaphore.Release();
+                        }
+                    }));
+                }
+
+                var cacheFiles = await Task.WhenAll(tasksWithThrottle);
                 return await MergeFilesAsync(cacheFiles, outputPath, apkFileDetails.FileMd5, onStageChanged);
             }
 
@@ -114,6 +136,8 @@ namespace ApkDownload.Shared.Downloader
                 var localMd5 = await CalculateMD5Async(localFilePath);
                 if (localMd5 == fileInfo.FileMd5)
                 {
+                    DependencyService.Get<IToast>()
+                        .Show($"Chunk: {fileInfo.FileName} verified!");
                     return localFilePath;
                 }
 
