@@ -1,26 +1,12 @@
 ﻿using System.Security.Cryptography;
 using ApkDownload.Shared.Interface;
-using Newtonsoft.Json;
 
 namespace ApkDownload.Shared.Downloader
 {
-    public class FileDownloader
+    public partial class FileDownloader
     {
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(3);
 
-        public async Task<ApkFileDetails> FetchFileListAsync(string url)
-        {
-            using var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync(url);
-            return JsonConvert.DeserializeObject<ApkFileDetails>(json);
-        }
-
-        public class ProgressReport
-        {
-            public long TotalBytes { get; init; }
-            public long BytesDownloaded { get; set; }
-            public double ProgressPercentage => (double)BytesDownloaded / TotalBytes;
-        }
 
         public enum DownloadStage
         {
@@ -29,7 +15,7 @@ namespace ApkDownload.Shared.Downloader
             Validate
         }
 
-        public delegate void ProgressChangedHandler(ProgressReport report);
+        public delegate void ProgressChangedHandler(FileDownloaderProgressReport report);
 
         public delegate void DownloadStageHandler(DownloadStage stage);
 
@@ -54,7 +40,7 @@ namespace ApkDownload.Shared.Downloader
                 onStageChanged?.Invoke(DownloadStage.Downloading);
 
                 var totalSize = parts.Sum(file => file.Size);
-                var progressReport = new ProgressReport { TotalBytes = totalSize };
+                var progressReport = new FileDownloaderProgressReport { TotalBytes = totalSize };
 
                 var downloadTasks = parts.Select(file => DownloadFileAsync(file, progressReport, onProgressChanged))
                     .ToList();
@@ -66,7 +52,7 @@ namespace ApkDownload.Shared.Downloader
             return true;
         }
 
-        private async Task<string> DownloadFileAsync(DownloadFileInfo fileInfo, ProgressReport progressReport,
+        private async Task<string> DownloadFileAsync(DownloadFileInfo fileInfo, FileDownloaderProgressReport fileDownloaderProgressReport,
             ProgressChangedHandler onProgressChanged)
         {
             await semaphore.WaitAsync();
@@ -85,7 +71,7 @@ namespace ApkDownload.Shared.Downloader
                 {
                     existingLength = new FileInfo(localFilePath).Length;
                     downloadedBytes += existingLength;
-                    progressReport.BytesDownloaded += existingLength;
+                    fileDownloaderProgressReport.BytesDownloaded += existingLength;
                 }
 
                 using var httpClient = new HttpClient();
@@ -111,8 +97,8 @@ namespace ApkDownload.Shared.Downloader
                 {
                     await outputStream.WriteAsync(buffer, 0, bytesRead);
                     downloadedBytes += bytesRead;
-                    progressReport.BytesDownloaded += bytesRead;
-                    onProgressChanged?.Invoke(progressReport);
+                    fileDownloaderProgressReport.BytesDownloaded += bytesRead;
+                    onProgressChanged?.Invoke(fileDownloaderProgressReport);
                 }
 
                 await outputStream.FlushAsync();
@@ -143,11 +129,11 @@ namespace ApkDownload.Shared.Downloader
                 localFileInfo.Delete();
             }
 
-            progressReport.BytesDownloaded -= downloadedBytes;
+            fileDownloaderProgressReport.BytesDownloaded -= downloadedBytes;
             semaphore.Release();
 
             await Task.Delay(1000 * 5);
-            return await DownloadFileAsync(fileInfo, progressReport, onProgressChanged);
+            return await DownloadFileAsync(fileInfo, fileDownloaderProgressReport, onProgressChanged);
         }
 
         public async Task<string> CalculateMD5Async(string filePath)
